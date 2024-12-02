@@ -1,5 +1,7 @@
 import gleam/io
 
 pub fn main() {
-  io.println("Hello from advent_of_code_2024!")
+  io.println(
+    "hello, world! no command line stuff for this aoc at the moment :)",
+  )
 }
