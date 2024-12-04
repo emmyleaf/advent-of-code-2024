@@ -3,19 +3,16 @@ import gleam/list
 import gleam/string
 
 fn parse_reports(input: String) -> List(List(Int)) {
-  string.split(input, on: "\n")
-  |> list.map(fn(report) {
-    string.split(report, on: " ") |> list.filter_map(int.parse)
-  })
+  use report <- list.map(string.split(input, on: "\n"))
+  string.split(report, on: " ") |> list.filter_map(int.parse)
 }
 
 fn possible_safe_reports(report: List(Int)) -> List(List(Int)) {
-  list.index_fold(report, list.new(), fn(acc, _, index) {
-    case list.split(report, index) {
-      #(heads, [_remove, ..tail]) -> [list.append(heads, tail), ..acc]
-      #(heads, []) -> [heads, ..acc]
-    }
-  })
+  use acc, _, index <- list.index_fold(report, list.new())
+  case list.split(report, index) {
+    #(heads, [_remove, ..tail]) -> [list.append(heads, tail), ..acc]
+    #(heads, []) -> [heads, ..acc]
+  }
 }
 
 fn evaluate_report_safety_loop(report: List(Int), last_sign: Int) -> Bool {
